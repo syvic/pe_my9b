@@ -57,9 +57,9 @@ bool connectToServer() {
   Serial.println(" - Found our service");
 
   // Obtain a reference to the TX characteristic in the service of the remote BLE server.
-  //pRemoteCharacteristicRX = pRemoteService->getCharacteristic(charUUID_RX);
+  pRemoteCharacteristicRX = pRemoteService->getCharacteristic(charUUID_RX);
   
-  /*
+  
   if (pRemoteCharacteristicRX == nullptr) {
     Serial.print("Failed to find our characteristic UUID: ");
     Serial.println(charUUID_RX.toString().c_str());
@@ -79,7 +79,6 @@ bool connectToServer() {
     Serial.println("Habilitando notificaciones RX");
     pRemoteCharacteristicRX->registerForNotify(notifyCallbackRX);
   }
-*/
   
   /*NUEVO*/
   pRemoteCharacteristicTX = pRemoteService->getCharacteristic(charUUID_TX);
