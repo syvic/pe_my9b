@@ -1,7 +1,6 @@
 #define PASO_LETRAS 10
 #define INTERVALO_LECTURA 200
 
-
 void keyboard_check() {
   static unsigned long t_keyboard = 0;
   uint8_t churro_apaga_led[] =        {0x5A, 0xA5, 0x02, 0x3E, 0x20, 0x02, 0x7D, 0x00, 0x00, 0x20, 0xFF};
@@ -16,40 +15,24 @@ void keyboard_check() {
     //Desbloquear patín
     if (GO.BtnStart.isPressed() == 1) {
       p_remote_characteristic_rx->writeValue(churro_desbloquea_patin, sizeof churro_desbloquea_patin, false);
-      GO.lcd.setCursor(170, 0);
-      GO.lcd.setTextFont(4);
-      GO.lcd.setTextColor(RED);
-      GO.lcd.println("LOCK: OFF");
       GO.Speaker.tone(7000, 10);
     }
 
     //Bloquear patín
     if (GO.BtnSelect.isPressed() == 1) {
       p_remote_characteristic_rx->writeValue(churro_bloquea_patin, sizeof churro_bloquea_patin, false);
-      GO.lcd.setCursor(170, 0);
-      GO.lcd.setTextFont(4);
-      GO.lcd.setTextColor(GREEN);
-      GO.lcd.println("LOCK: ON");
       GO.Speaker.tone(7000, 10);
     }
 
     //Encender TAIL
     if (GO.BtnA.isPressed() == 1) {
       p_remote_characteristic_rx->writeValue(churro_enciende_led, sizeof churro_enciende_led, false);
-      GO.lcd.setCursor(25, 0);
-      GO.lcd.setTextFont(4);
-      GO.lcd.setTextColor(RED);
-      GO.lcd.println("TAIL: ON");
       GO.Speaker.tone(5000, 10);
     }
 
     //Apagar TAIL
     if (GO.BtnB.isPressed() == 1) {
       p_remote_characteristic_rx->writeValue(churro_apaga_led, sizeof churro_apaga_led, false);
-      GO.lcd.setCursor(25, 0);
-      GO.lcd.setTextFont(4);
-      GO.lcd.setTextColor(GREEN);
-      GO.lcd.println("TAIL: OFF");
       GO.Speaker.tone(4000, 10);
     }
 
@@ -71,6 +54,4 @@ void keyboard_check() {
     }
 
   }
-  GO.lcd.setTextFont(1);
-  GO.lcd.setTextColor(WHITE);
 }

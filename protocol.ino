@@ -1,8 +1,5 @@
 //5A A5 bLen bSrcAddr bDstAddr bCmd bArg bPayload[bLen] wChecksumLE
 
-
-
-
 boolean protocol_check_cmd(int msg_size, uint8_t* msg_data) {
   boolean valid_packet = true;
   int i;
@@ -57,18 +54,38 @@ boolean protocol_check_cmd(int msg_size, uint8_t* msg_data) {
 
 ninebot_status_t protocol_process_cmd(int msg_size, uint8_t* msg_data) {
   int i;
-  ninebot_status_t ninebot_status;
+  static ninebot_status_t ninebot_status;
+
+  byte cmd = msg_data[5];
+  byte reg = msg_data[6];
+  byte payload[2];
 
   Serial.printf("\nProcesando paquete\n--------------------\n");
-  Serial.printf("  CMD: %s\n",  msg_defs_hash_get_element(msg_data[5], CMD));
-  Serial.printf("  REG: %s\n",  msg_defs_hash_get_element(msg_data[6], REG));
+  Serial.printf("  CMD: %s\n",  msg_defs_hash_get_element(cmd, CMD));
+  Serial.printf("  REG: %s\n",  msg_defs_hash_get_element(reg, REG));
 
   for (i = 0; i < msg_data[2]; i++) {
     Serial.printf("  PAYLOAD[%d]: %X\n", i, msg_data[7 + i]);
   }
   Serial.printf("--------------------\n\n");
 
-  ninebot_status.run_mode=4;
+  if (cmd == CMD_RES1) {
+    switch (reg) {
+      case REG_OP_MODE:
+        ninebot_status.run_mode = msg_data[7];
+        Serial.printf("[PROTO] Tenemos una respuesta de MODO. El valor es: %d\n", ninebot_status.run_mode);
+        break;
+      case REG_BAT_LVL:
+        ninebot_status.bat_level = msg_data[7];
+        Serial.printf("[PROTO] Tenemos una respuesta de BATERIA. El valor es: %d\n", ninebot_status.bat_level);
+        break;
+      default:
+        Serial.printf("[PROTO] Registro no registrado todavía");
+        break;
+    }
+  }
+
+  return ninebot_status;
 
 }
 

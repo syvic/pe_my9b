@@ -3,13 +3,22 @@
 // - Conseguir que con la tecla cruceta arriba se envíe el mensaje de petición de firmware, por ejemplo
 // - Conseguir que ocn la tecla cruceta abajo se envíe el mensaje de petición de velocidad actual
 // - Hacer que este tipo de peticiones se realicen periódicamente y representarlas en la pantalla
+// - ¿Cómo hago para consguir que el estado del BLE también sea gestionado por el UI? ¿Dos estructuras pintadas en diferentes sitios de la pantalla?
 
 #include <odroid_go.h>
 #include "BLE.h"
 
-typedef struct ninebot_status_t {
+typedef struct {
+  bool ble_connected;
+  bool ble_scanning;
+} ble_connection_status_t;
+
+typedef struct {
   byte run_mode;
-};
+  int bat_level;
+} ninebot_status_t;
+
+ble_connection_status_t ble_connection_status;
 
 void setup() {
   //Inicializamos hashes:
@@ -22,13 +31,12 @@ void setup() {
   Serial.begin(115200);
 
   GO.begin();
-  GO.lcd.println("\n\n\nGO OK");
+  GO.lcd.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGO OK");
 
   BLEDevice::init("");
-  GO.lcd.println("\nBLEDevice OK");
 
   ble_scan();
-  GO.lcd.println("\nBLE Scan OK");
+  ticker_setup();
 }
 
 
@@ -38,20 +46,21 @@ void loop() {
 
   if (do_connect == true) {
     if (ble_connect_to_server()) {
+      ble_connection_status.ble_connected=true;
       Serial.println("Conectados al servidor BLE");
-      GO.lcd.println("\nConectados al servidor BLE");
     } else {
+      ble_connection_status.ble_connected=false;
       Serial.println("Fallo al establecer conexión con el servidor BLE");
-      GO.lcd.println("\nFallo al establecer conexión con el servidor BLE");
     }
     do_connect = false;
   }
 
   if (connected) {
     keyboard_check();
+    ble_connection_status.ble_scanning=false;
   }
   else if (do_scan) {
-    GO.lcd.println("\nScanning");
+    ble_connection_status.ble_scanning=true;
     BLEDevice::getScan()->start(0);
   }
 
