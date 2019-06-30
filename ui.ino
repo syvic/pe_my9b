@@ -11,6 +11,10 @@ void ui_update(ninebot_status_t nine_status) {
   //GO.lcd.setTextFont(1);
   //GO.lcd.setTextColor(WHITE);
 
+  
+  /* 
+   * MODO DE FUNCIONAMIENTO 
+   */
   GO.lcd.fillRect(150, 90, 170, 22, BLACK);
   GO.lcd.setCursor(150, 90);
   GO.lcd.setTextFont(4);
@@ -31,6 +35,19 @@ void ui_update(ninebot_status_t nine_status) {
       GO.lcd.println("MODE: SPORT");
       break;
   }
+
+
+  /* 
+   * ESTADO DE LA BATERÍA
+   */
+  GO.lcd.fillRect(0, 90, 149, 22, BLACK);
+  GO.lcd.setCursor(0, 90);
+  GO.lcd.setTextFont(4);
+  GO.lcd.setTextColor(WHITE);
+  GO.lcd.print("BAT (%): ");
+  GO.lcd.print(nine_status.bat_level);
+
+
 
   if (0) {  //Patín bloqueado
     GO.lcd.setCursor(170, 0);

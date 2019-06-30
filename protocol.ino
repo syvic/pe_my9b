@@ -78,6 +78,8 @@ ninebot_status_t protocol_process_cmd(int msg_size, uint8_t* msg_data) {
       case REG_BAT_LVL:
         ninebot_status.bat_level = msg_data[7];
         Serial.printf("[PROTO] Tenemos una respuesta de BATERIA. El valor es: %d\n", ninebot_status.bat_level);
+        //El resultado de este comando es 5A A5 01 20 3E 04 22 51 29 FF.
+        //
         break;
       default:
         Serial.printf("[PROTO] Registro no registrado todavía");

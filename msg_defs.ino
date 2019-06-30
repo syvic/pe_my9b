@@ -9,7 +9,6 @@
 #define CMD_RES1 0x04
 #define CMD_RES2 0x05
 
-
 enum field_type {
   DEVICE_ADDR = 0,
   CMD = 1,
@@ -30,7 +29,7 @@ hash_t reg_item[REG_NO_ITEMS];
 #define REG_SERIAL_NO 0x10
 #define REG_FW_VER    0x1A
 #define REG_OP_MODE   0x75
-#define REG_BAT_LVL   0xB4
+#define REG_BAT_LVL   0x22
 
 void msg_defs_init_reg() {
   //Esto molaría poder hacerlo en preprocesador...

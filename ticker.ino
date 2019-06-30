@@ -1,8 +1,11 @@
 #include <Ticker.h>
 Ticker get_status;
 
+//Cálculo de checksums: 
+//echo "obase=16;ibase=16;xor((1 + 3E + 20 + 02 + FB + 2), FFFF)" | bc -l bin/logic.bc
 
 uint8_t churro_lee_modo[] =         {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x75, 0x01, 0x29, 0xFF};
+uint8_t churro_lee_batt[] =         {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x22, 0x01, 0x7C, 0xFF}; //Puede ser el 22 o el B4
 
 
 void ticker_setup() {
@@ -19,6 +22,7 @@ void ticker_get_status() {
       p_remote_characteristic_rx->writeValue(churro_lee_modo, sizeof churro_lee_modo, false);
       break;
     case 1:
+      p_remote_characteristic_rx->writeValue(churro_lee_batt, sizeof churro_lee_batt, false);
       break;
   }
   check_idx++;

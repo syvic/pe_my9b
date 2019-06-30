@@ -1,9 +1,7 @@
 //TODO: El DAC hace ruido cuando está establecida la conexión BLE... no sé si podrá ser un error de diseño...
 //TODO: Siguientes pasos:
-// - Conseguir que con la tecla cruceta arriba se envíe el mensaje de petición de firmware, por ejemplo
-// - Conseguir que ocn la tecla cruceta abajo se envíe el mensaje de petición de velocidad actual
-// - Hacer que este tipo de peticiones se realicen periódicamente y representarlas en la pantalla
 // - ¿Cómo hago para consguir que el estado del BLE también sea gestionado por el UI? ¿Dos estructuras pintadas en diferentes sitios de la pantalla?
+// - Conseguir que el cacharro esté todo el rato mirando a ver si hay dispositivos disponibles
 
 #include <odroid_go.h>
 #include "BLE.h"
@@ -48,7 +46,8 @@ void loop() {
     if (ble_connect_to_server()) {
       ble_connection_status.ble_connected=true;
       Serial.println("Conectados al servidor BLE");
-    } else {
+    } 
+    else {
       ble_connection_status.ble_connected=false;
       Serial.println("Fallo al establecer conexión con el servidor BLE");
     }
