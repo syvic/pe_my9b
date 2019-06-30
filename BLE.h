@@ -4,7 +4,7 @@
 static BLEUUID    serviceUUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
 // The characteristic of the remote service we are interested in.
 static BLEUUID    charUUID_RX("6E400002-B5A3-F393-E0A9-E50E24DCCA9E"); //Aquí es donde escribimos
-static BLEUUID    charUUID_TX("6E400002-B5A3-F393-E0A9-E50E24DCCA9E"); //Aquí es de donde leemos
+static BLEUUID    charUUID_TX("6E400003-B5A3-F393-E0A9-E50E24DCCA9E"); //Aquí es de donde leemos
 
 static boolean doConnect = false;
 static boolean connected = false;

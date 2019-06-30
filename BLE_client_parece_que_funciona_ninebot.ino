@@ -1,7 +1,12 @@
+//TODO: El DAC hace ruido cuando está establecida la conexión BLE... no sé si podrá ser un error de diseño...
+
 #include <odroid_go.h>
 #include "BLE.h"
 
 void setup() {
+  //Inicializamos hashes:
+  init_device_addr();
+  
   Serial.begin(115200);
   GO.begin();
   GO.lcd.println("\n\n\nGO OK");

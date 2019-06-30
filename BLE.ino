@@ -1,8 +1,5 @@
 
 void BLEscan(){
-  // Retrieve a Scanner and set the callback we want to use to be informed when we
-  // have detected a new device.  Specify that we want active scanning and start the
-  // scan to run for 5 seconds.
   BLEScan* pBLEScan = BLEDevice::getScan();
   pBLEScan->setAdvertisedDeviceCallbacks(new MyAdvertisedDeviceCallbacks());
   pBLEScan->setInterval(1349);
@@ -14,17 +11,15 @@ void BLEscan(){
 
 static void notifyCallbackTX(BLERemoteCharacteristic* pBLERemoteCharacteristic, uint8_t* pData, size_t length, bool isNotify) {
   Serial.print("Notify callback for characteristic TX ");
-  Serial.print(pBLERemoteCharacteristic->getUUID().toString().c_str());
-  Serial.print(" of data length ");
-  Serial.println(length);
-  Serial.print("data: ");
-  Serial.println((char*)pData);
+  Serial.println(pBLERemoteCharacteristic->getUUID().toString().c_str());
+
+  protocol_receive_cmd(length, pData);
 }
 
 
 static void notifyCallbackRX(BLERemoteCharacteristic* pBLERemoteCharacteristic, uint8_t* pData, size_t length, bool isNotify) {
   Serial.print("Notify callback for characteristic RX ");
-  Serial.print(pBLERemoteCharacteristic->getUUID().toString().c_str());
+  Serial.println(pBLERemoteCharacteristic->getUUID().toString().c_str());
   Serial.print(" of data length ");
   Serial.println(length);
   Serial.print("data: ");
