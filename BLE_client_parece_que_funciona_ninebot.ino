@@ -1,20 +1,27 @@
 //TODO: El DAC hace ruido cuando está establecida la conexión BLE... no sé si podrá ser un error de diseño...
+//TODO: Siguientes pasos:
+// - Conseguir que con la tecla cruceta arriba se envíe el mensaje de petición de firmware, por ejemplo
+// - Conseguir que ocn la tecla cruceta abajo se envíe el mensaje de petición de velocidad actual
+// - Hacer que este tipo de peticiones se realicen periódicamente y representarlas en la pantalla
 
 #include <odroid_go.h>
 #include "BLE.h"
 
 void setup() {
   //Inicializamos hashes:
-  init_device_addr();
+  msg_defs_init_device_addr();
+  msg_defs_init_cmd();
+  msg_defs_init_reg();
   
   Serial.begin(115200);
+
   GO.begin();
   GO.lcd.println("\n\n\nGO OK");
 
   BLEDevice::init("");
   GO.lcd.println("\nBLEDevice OK");
 
-  BLEscan();
+  ble_scan();
   GO.lcd.println("\nBLE Scan OK");
 }
 
@@ -23,23 +30,23 @@ void loop() {
 
   GO.update();
 
-  if (doConnect == true) {
-    if (connectToServer()) {
-      Serial.println("We are now connected to the BLE Server.");
-      GO.lcd.println("\nConnected to BLE Server");
+  if (do_connect == true) {
+    if (ble_connect_to_server()) {
+      Serial.println("Conectados al servidor BLE");
+      GO.lcd.println("\nConectados al servidor BLE");
     } else {
-      Serial.println("We have failed to connect to the server; there is nothin more we will do.");
-      GO.lcd.println("\nFailed to connect to BLE Server");
+      Serial.println("Fallo al establecer conexión con el servidor BLE");
+      GO.lcd.println("\nFallo al establecer conexión con el servidor BLE");
     }
-    doConnect = false;
+    do_connect = false;
   }
 
   if (connected) {
     keyboard_check();
   }
-  else if (doScan) {
+  else if (do_scan) {
     GO.lcd.println("\nScanning");
-    BLEDevice::getScan()->start(0);  // this is just example to start scan after disconnect, most likely there is better way to do it in arduino
+    BLEDevice::getScan()->start(0);
   }
 
 }
