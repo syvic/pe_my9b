@@ -15,7 +15,7 @@ void keyboard_check() {
 
     //Desbloquear patín
     if (GO.BtnStart.isPressed() == 1) {
-      pRemoteCharacteristicRX->writeValue(churro_desbloquea_patin, sizeof churro_desbloquea_patin, false);
+      p_remote_characteristic_rx->writeValue(churro_desbloquea_patin, sizeof churro_desbloquea_patin, false);
       GO.lcd.setCursor(170, 0);
       GO.lcd.setTextFont(4);
       GO.lcd.setTextColor(RED);
@@ -25,7 +25,7 @@ void keyboard_check() {
 
     //Bloquear patín
     if (GO.BtnSelect.isPressed() == 1) {
-      pRemoteCharacteristicRX->writeValue(churro_bloquea_patin, sizeof churro_bloquea_patin, false);
+      p_remote_characteristic_rx->writeValue(churro_bloquea_patin, sizeof churro_bloquea_patin, false);
       GO.lcd.setCursor(170, 0);
       GO.lcd.setTextFont(4);
       GO.lcd.setTextColor(GREEN);
@@ -35,7 +35,7 @@ void keyboard_check() {
 
     //Encender TAIL
     if (GO.BtnA.isPressed() == 1) {
-      pRemoteCharacteristicRX->writeValue(churro_enciende_led, sizeof churro_enciende_led, false);
+      p_remote_characteristic_rx->writeValue(churro_enciende_led, sizeof churro_enciende_led, false);
       GO.lcd.setCursor(25, 0);
       GO.lcd.setTextFont(4);
       GO.lcd.setTextColor(RED);
@@ -45,7 +45,7 @@ void keyboard_check() {
 
     //Apagar TAIL
     if (GO.BtnB.isPressed() == 1) {
-      pRemoteCharacteristicRX->writeValue(churro_apaga_led, sizeof churro_apaga_led, false);
+      p_remote_characteristic_rx->writeValue(churro_apaga_led, sizeof churro_apaga_led, false);
       GO.lcd.setCursor(25, 0);
       GO.lcd.setTextFont(4);
       GO.lcd.setTextColor(GREEN);
@@ -62,7 +62,7 @@ void keyboard_check() {
     }
 
     if (GO.JOY_Y.isAxisPressed() == 2) { //Tecla arriba
-      pRemoteCharacteristicRX->writeValue(churro_lee_modo, sizeof churro_lee_modo, false);
+      p_remote_characteristic_rx->writeValue(churro_lee_modo, sizeof churro_lee_modo, false);
       GO.Speaker.tone(200, 5);
     }
 

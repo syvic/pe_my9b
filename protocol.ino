@@ -1,7 +1,10 @@
 //5A A5 bLen bSrcAddr bDstAddr bCmd bArg bPayload[bLen] wChecksumLE
 
 
-void protocol_receive_cmd(int msg_size, uint8_t* msg_data) {
+
+
+boolean protocol_check_cmd(int msg_size, uint8_t* msg_data) {
+  boolean valid_packet = true;
   int i;
   unsigned int checksum = 0;
 
@@ -18,6 +21,7 @@ void protocol_receive_cmd(int msg_size, uint8_t* msg_data) {
   }
   else {
     Serial.printf("FAIL\n");
+    valid_packet = false;
   }
   Serial.printf("  DATA LENGTH: %d\n", msg_data[2]);
   Serial.printf("  ORIG: %s\n", msg_defs_hash_get_element(msg_data[3], DEVICE_ADDR));
@@ -40,11 +44,31 @@ void protocol_receive_cmd(int msg_size, uint8_t* msg_data) {
   Serial.printf("  CHECKSUM: ");
   if (checksum != (msg_data[7 + msg_data[2]] | (msg_data[8 + msg_data[2]]) << 8 )) {
     Serial.printf("FAIL\n");
+    valid_packet = false;
   }
   else {
     Serial.printf("OK\n");
   }
   Serial.printf("--------------------\n\n");
+
+  return valid_packet;
+
+}
+
+ninebot_status_t protocol_process_cmd(int msg_size, uint8_t* msg_data) {
+  int i;
+  ninebot_status_t ninebot_status;
+
+  Serial.printf("\nProcesando paquete\n--------------------\n");
+  Serial.printf("  CMD: %s\n",  msg_defs_hash_get_element(msg_data[5], CMD));
+  Serial.printf("  REG: %s\n",  msg_defs_hash_get_element(msg_data[6], REG));
+
+  for (i = 0; i < msg_data[2]; i++) {
+    Serial.printf("  PAYLOAD[%d]: %X\n", i, msg_data[7 + i]);
+  }
+  Serial.printf("--------------------\n\n");
+
+  ninebot_status.run_mode=4;
 
 }
 

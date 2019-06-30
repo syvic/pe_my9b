@@ -7,11 +7,17 @@
 #include <odroid_go.h>
 #include "BLE.h"
 
+typedef struct ninebot_status_t {
+  byte run_mode;
+};
+
 void setup() {
   //Inicializamos hashes:
   msg_defs_init_device_addr();
   msg_defs_init_cmd();
   msg_defs_init_reg();
+  
+  ui_init();
   
   Serial.begin(115200);
 

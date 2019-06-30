@@ -1,16 +1,16 @@
 #include "BLEDevice.h"
 
-static BLEUUID    serviceUUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
-static BLEUUID    charUUID_RX("6E400002-B5A3-F393-E0A9-E50E24DCCA9E"); //Aquí es donde escribimos
-static BLEUUID    charUUID_TX("6E400003-B5A3-F393-E0A9-E50E24DCCA9E"); //Aquí es de donde leemos
+static BLEUUID serviceUUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
+static BLEUUID charUUID_RX("6E400002-B5A3-F393-E0A9-E50E24DCCA9E"); //Aquí es donde escribimos
+static BLEUUID charUUID_TX("6E400003-B5A3-F393-E0A9-E50E24DCCA9E"); //Aquí es de donde leemos
 
 static boolean do_connect = false;
 static boolean connected = false;
 static boolean do_scan = false;
 
-static BLERemoteCharacteristic* pRemoteCharacteristicRX;
-static BLERemoteCharacteristic* pRemoteCharacteristicTX;
-static BLEAdvertisedDevice* myDevice;
+static BLERemoteCharacteristic* p_remote_characteristic_rx;
+static BLERemoteCharacteristic* p_remote_characteristic_tx;
+static BLEAdvertisedDevice* patinete;
 
 class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
     void onResult(BLEAdvertisedDevice advertisedDevice) {
@@ -19,7 +19,7 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
 
       if (advertisedDevice.haveServiceUUID() && advertisedDevice.isAdvertisingService(serviceUUID)) {
         BLEDevice::getScan()->stop();
-        myDevice = new BLEAdvertisedDevice(advertisedDevice);
+        patinete = new BLEAdvertisedDevice(advertisedDevice);
         do_connect = true;
         do_scan = true;
       }
