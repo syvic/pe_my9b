@@ -1,6 +1,6 @@
 #define DEVICE_ADDR_NO_ITEMS 7
 #define CMD_NO_ITEMS 4
-#define REG_NO_ITEMS 4
+#define REG_NO_ITEMS 5
 
 enum field_type {
   DEVICE_ADDR = 0,
@@ -20,8 +20,8 @@ hash_t reg_item[REG_NO_ITEMS];
 
 void msg_defs_init_reg() {
   //Esto molaría poder hacerlo en preprocesador...
-  int idx=0;
-  
+  int idx = 0;
+
   reg_item[idx].key = 0x00;
   strcpy (reg_item[idx++].name, "MAGIC ACK");
 
@@ -33,13 +33,17 @@ void msg_defs_init_reg() {
 
   reg_item[idx].key = 0x75;
   strcpy (reg_item[idx++].name, "OP MODE");
+
+  reg_item[idx].key = 0xB4;
+  strcpy (reg_item[idx++].name, "BAT LEVEL");
+
 }
 
 
 void msg_defs_init_cmd() {
   //Esto molaría poder hacerlo en preprocesador...
-  int idx=0;
-  
+  int idx = 0;
+
   cmd_item[idx].key = 0x01;
   strcpy (cmd_item[0].name, "READ REG");
 
@@ -56,8 +60,8 @@ void msg_defs_init_cmd() {
 
 void msg_defs_init_device_addr() {
   //Esto molaría poder hacerlo en preprocesador...
-  int idx=0;
-  
+  int idx = 0;
+
   device_addr_item[idx].key = 0x20;
   strcpy (device_addr_item[idx++].name, "ESC");
 
