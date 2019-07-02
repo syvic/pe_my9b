@@ -25,11 +25,17 @@ hash_t device_addr_item[DEVICE_ADDR_NO_ITEMS];
 hash_t cmd_item[CMD_NO_ITEMS];
 hash_t reg_item[REG_NO_ITEMS];
 
-#define REG_MAGIC_ACK 0x00
-#define REG_SERIAL_NO 0x10
-#define REG_FW_VER    0x1A
-#define REG_OP_MODE   0x75
-#define REG_BAT_LVL   0x22
+#define REG_MAGIC_ACK                     0x00
+#define REG_SERIAL_NO                     0x10
+#define REG_FW_VER                        0x1A
+#define REG_OP_MODE                       0x75
+#define REG_BAT_LVL                       0x22
+#define REG_MILEAGE                       0x29
+#define REG_REMAINING_PREDICTED_MILEAGE   0x24 
+#define REG_REMAINING_MILEAGE             0x25 
+#define REG_CURRENT_MILEAGE               0x2F 
+
+
 
 void msg_defs_init_reg() {
   //Esto molaría poder hacerlo en preprocesador...
@@ -49,6 +55,19 @@ void msg_defs_init_reg() {
 
   reg_item[idx].key = REG_BAT_LVL;
   strcpy (reg_item[idx++].name, "BAT LEVEL");
+
+  reg_item[idx].key = REG_MILEAGE;
+  strcpy (reg_item[idx++].name, "MILEAGE");
+
+  reg_item[idx].key = REG_REMAINING_MILEAGE;
+  strcpy (reg_item[idx++].name, "REMAINING MILEAGE");
+
+  reg_item[idx].key = REG_REMAINING_PREDICTED_MILEAGE;
+  strcpy (reg_item[idx++].name, "REMAINING PREDICTED MILEAGE");
+
+  reg_item[idx].key = REG_CURRENT_MILEAGE;
+  strcpy (reg_item[idx++].name, "CURRENT MILEAGE");
+
 
 }
 

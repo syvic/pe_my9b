@@ -75,12 +75,34 @@ ninebot_status_t protocol_process_cmd(int msg_size, uint8_t* msg_data) {
         ninebot_status.run_mode = msg_data[7];
         Serial.printf("[PROTO] Tenemos una respuesta de MODO. El valor es: %d\n", ninebot_status.run_mode);
         break;
+
       case REG_BAT_LVL:
         ninebot_status.bat_level = msg_data[7];
         Serial.printf("[PROTO] Tenemos una respuesta de BATERIA. El valor es: %d\n", ninebot_status.bat_level);
         //El resultado de este comando es 5A A5 01 20 3E 04 22 51 29 FF.
         //
         break;
+
+      case REG_MILEAGE:
+        ninebot_status.mileage = msg_data[7] | msg_data[8] << 8 | msg_data[9] << 16 | msg_data[10] << 24;
+        Serial.printf("[PROTO] Metros totales recorridos es: %ul", ninebot_status.mileage);
+        break;
+
+      case REG_CURRENT_MILEAGE:
+        ninebot_status.current_mileage = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] Metros totales actuales recorridos es: %ul", ninebot_status.current_mileage);
+        break;
+
+      case REG_REMAINING_PREDICTED_MILEAGE:
+        ninebot_status.remaining_predicted_mileage = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] Decímetros restantes (predicted): %ul", ninebot_status.remaining_predicted_mileage);
+        break;
+
+      case REG_REMAINING_MILEAGE:
+        ninebot_status.remaining_mileage = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] Decímetros restantes: %ul", ninebot_status.remaining_mileage);
+        break;
+
       default:
         Serial.printf("[PROTO] Registro no registrado todavía");
         break;

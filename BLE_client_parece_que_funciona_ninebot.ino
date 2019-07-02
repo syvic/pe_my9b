@@ -2,6 +2,11 @@
 //TODO: Siguientes pasos:
 // - ¿Cómo hago para consguir que el estado del BLE también sea gestionado por el UI? ¿Dos estructuras pintadas en diferentes sitios de la pantalla?
 // - Conseguir que el cacharro esté todo el rato mirando a ver si hay dispositivos disponibles
+// - Implementar el comando de petición de Serial y su respuesta:
+//    - PETICIÓN: 5A A5 01 3E 20 01 10 0E 81 FF
+//    - RESPUEST: 5A A5 0E 20 3E 04 10 4E 32 47 54 51 38 39 38 43 34 37 39 31 21 FC
+
+//IMPORTANTE: EN los comandos de lectura lo que viene después del registro es la cantidad de bytes que queremos leer del mismo
 
 #include <odroid_go.h>
 #include "BLE.h"
@@ -14,6 +19,12 @@ typedef struct {
 typedef struct {
   byte run_mode;
   int bat_level;
+  uint32_t mileage;
+  uint16_t remaining_mileage;
+  uint16_t remaining_predicted_mileage;
+  uint16_t current_mileage;
+  bool tail_light;
+  bool locked;
 } ninebot_status_t;
 
 ble_connection_status_t ble_connection_status;
@@ -29,7 +40,9 @@ void setup() {
   Serial.begin(115200);
 
   GO.begin();
-  GO.lcd.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGO OK");
+  //GO.lcd.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGO OK");
+  GO.lcd.setCursor(0, 240);
+  GO.lcd.println("GO OK");
 
   BLEDevice::init("");
 

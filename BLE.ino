@@ -16,7 +16,7 @@ static void ble_notify_callback_TX(BLERemoteCharacteristic* pBLERemoteCharacteri
 
   if (protocol_check_cmd(length, pData)) {
     ninebot_stat = protocol_process_cmd(length, pData);
-    ui_update(ninebot_stat);
+    //SYV AQUI FUNCIONABA BIEN PERO CON UN POCO DE FLICKERING DE LA PANTALLA: ui_update(ninebot_stat);
   }
 
 }
