@@ -1,13 +1,4 @@
-//Tipos de datos
-#define DEVICE_ADDR_NO_ITEMS 7
-#define CMD_NO_ITEMS 4
-#define REG_NO_ITEMS 5
 
-//Comandos
-#define CMD_READ_REG 0x01
-#define CMD_WRITE_REG 0x02
-#define CMD_RES1 0x04
-#define CMD_RES2 0x05
 
 enum field_type {
   DEVICE_ADDR = 0,
@@ -24,16 +15,6 @@ typedef struct {
 hash_t device_addr_item[DEVICE_ADDR_NO_ITEMS];
 hash_t cmd_item[CMD_NO_ITEMS];
 hash_t reg_item[REG_NO_ITEMS];
-
-#define REG_MAGIC_ACK                     0x00
-#define REG_SERIAL_NO                     0x10
-#define REG_FW_VER                        0x1A
-#define REG_OP_MODE                       0x75
-#define REG_BAT_LVL                       0x22
-#define REG_MILEAGE                       0x29
-#define REG_REMAINING_PREDICTED_MILEAGE   0x24 
-#define REG_REMAINING_MILEAGE             0x25 
-#define REG_CURRENT_MILEAGE               0x2F 
 
 
 
@@ -95,25 +76,25 @@ void msg_defs_init_device_addr() {
   //Esto molaría poder hacerlo en preprocesador...
   int idx = 0;
 
-  device_addr_item[idx].key = 0x20;
+  device_addr_item[idx].key = ADDR_ESC;
   strcpy (device_addr_item[idx++].name, "ESC");
 
-  device_addr_item[idx].key = 0x21;
+  device_addr_item[idx].key = ADDR_BLE;
   strcpy (device_addr_item[idx++].name, "BLE");
 
-  device_addr_item[idx].key = 0x22;
+  device_addr_item[idx].key = ADDR_BMS1;
   strcpy (device_addr_item[idx++].name, "BMS1");
 
-  device_addr_item[idx].key = 0x23;
+  device_addr_item[idx].key = ADDR_BMS2;
   strcpy (device_addr_item[idx++].name, "BMS2");
 
-  device_addr_item[idx].key = 0x3D;
+  device_addr_item[idx].key = ADDR_APP1;
   strcpy (device_addr_item[idx++].name, "APP1");
 
-  device_addr_item[idx].key = 0x3E;
+  device_addr_item[idx].key = ADDR_APP2;
   strcpy (device_addr_item[idx++].name, "APP2");
 
-  device_addr_item[idx].key = 0x3F;
+  device_addr_item[idx].key = ADDR_APP3;
   strcpy (device_addr_item[idx++].name, "APP3");
 
 }

@@ -5,11 +5,16 @@
 // - Implementar el comando de petición de Serial y su respuesta:
 //    - PETICIÓN: 5A A5 01 3E 20 01 10 0E 81 FF
 //    - RESPUEST: 5A A5 0E 20 3E 04 10 4E 32 47 54 51 38 39 38 43 34 37 39 31 21 FC
-
+//TODO: Recoger dato de velocidad para poder sacar velocidad máxima del trayecto y velocidad máxima total alcanzada
+//TODO: Que el cálculo del checksum se haga solo
+//TODO: QUe se reintente la conexión si no detecta BT y lo indique por pantalla
 //IMPORTANTE: EN los comandos de lectura lo que viene después del registro es la cantidad de bytes que queremos leer del mismo
 
 #include <odroid_go.h>
 #include "BLE.h"
+#include "protocol.h"
+
+uint8_t payload_current_mileage[] = {READ_REG_PAYLOAD_2_BYTES};
 
 typedef struct {
   bool ble_connected;
@@ -40,14 +45,13 @@ void setup() {
   Serial.begin(115200);
 
   GO.begin();
-  //GO.lcd.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGO OK");
-  GO.lcd.setCursor(0, 240);
-  GO.lcd.println("GO OK");
+  ui_footer_msg("GO OK");
 
   BLEDevice::init("");
 
   ble_scan();
   ticker_setup();
+
 }
 
 
