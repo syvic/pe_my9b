@@ -140,6 +140,31 @@ ninebot_status_t protocol_process_cmd(int msg_size, uint8_t* msg_data) {
         Serial.printf("[PROTO] Decímetros restantes: %u\n", ninebot_status.remaining_mileage);
         break;
 
+      case REG_FRAME_TEMP:
+        ninebot_status.frame_temp = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] Frame temp: %u\n", ninebot_status.frame_temp);
+        break;
+      case REG_BAT1_TEMP:
+        ninebot_status.bat1_temp = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] BAT1 temp: %u\n", ninebot_status.bat1_temp);
+        break;
+      case REG_BAT2_TEMP:
+        ninebot_status.bat2_temp = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] BAT2 temp: %u\n", ninebot_status.bat2_temp);
+        break;
+      case REG_MOS_TEMP:
+        ninebot_status.mos_temp = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] MOS temp: %u\n", ninebot_status.mos_temp);
+        break;
+      case REG_BAT_CURRENT:
+        ninebot_status.bat_current = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] BAT Current: %u\n", ninebot_status.bat_current);
+        break;
+      case REG_POWER:
+        ninebot_status.power = msg_data[7] | msg_data[8] << 8;
+        Serial.printf("[PROTO] POWER: %u\n", ninebot_status.power);
+        break;
+
       default:
         Serial.printf("[PROTO] Registro no registrado todavía\n");
         break;

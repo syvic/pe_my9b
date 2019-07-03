@@ -6,10 +6,6 @@ bool nbot_locked=false;
 
 void keyboard_check() {
   static unsigned long t_keyboard = 0;
-  //uint8_t churro_apaga_led[] =        {0x5A, 0xA5, 0x02, 0x3E, 0x20, 0x02, 0x7D, 0x00, 0x00, 0x20, 0xFF};
-  //uint8_t churro_enciende_led[] =     {0x5A, 0xA5, 0x02, 0x3E, 0x20, 0x02, 0x7D, 0x02, 0x00, 0x1E, 0xFF};
-  //uint8_t churro_bloquea_patin[] =    {0x5A, 0xA5, 0x02, 0x3E, 0x20, 0x02, 0x70, 0x01, 0x00, 0x2C, 0xFF};
-  //uint8_t churro_desbloquea_patin[] = {0x5A, 0xA5, 0x02, 0x3E, 0x20, 0x02, 0x71, 0x01, 0x00, 0x2B, 0xFF};
   uint8_t churro_chassis1_color[]=    {0x5A, 0xA5, 0x04, 0x3E, 0x20, 0x02, 0xC8, 0x25, 0x25, 0x20, 0x20, 0x11, 0xFF};
 
   uint8_t payload_write_zero_in_two_bytes[] = {0x00, 0x00};
@@ -29,7 +25,6 @@ void keyboard_check() {
 
     //Bloquear patín
     if (GO.BtnSelect.isPressed() == 1) {
-      //p_remote_characteristic_rx->writeValue(churro_bloquea_patin, sizeof churro_bloquea_patin, false);
       protocol_compose_send_msg(2, CMD_WRITE_REG, REG_LOCK, payload_write_one_in_two_bytes);
       nbot_locked=true; //ESTO ES UNA ÑAPA. MODIFICAR ESTO LEYENDO EL REGISTRO CORRESPONDIENTE
       GO.Speaker.tone(7000, 10);
@@ -37,7 +32,6 @@ void keyboard_check() {
 
     //Encender TAIL
     if (GO.BtnA.isPressed() == 1) {
-      //p_remote_characteristic_rx->writeValue(churro_enciende_led, sizeof churro_enciende_led, false);
       protocol_compose_send_msg(2, CMD_WRITE_REG, REG_TAIL_LED, payload_write_two_in_two_bytes);
       nbot_tail_light=true; //ESTO ES UNA ÑAPA. MODIFICAR ESTO LEYENDO EL REGISTRO CORRESPONDIENTE
       GO.Speaker.tone(5000, 10);
@@ -45,7 +39,6 @@ void keyboard_check() {
 
     //Apagar TAIL
     if (GO.BtnB.isPressed() == 1) {
-      //p_remote_characteristic_rx->writeValue(churro_apaga_led, sizeof churro_apaga_led, false);
       protocol_compose_send_msg(2, CMD_WRITE_REG, REG_TAIL_LED, payload_write_zero_in_two_bytes);
       nbot_tail_light=false; //ESTO ES UNA ÑAPA. MODIFICAR ESTO LEYENDO EL REGISTRO CORRESPONDIENTE
       GO.Speaker.tone(4000, 10);

@@ -9,6 +9,8 @@
 //TODO: QUe se reintente la conexión si no detecta BT y lo indique por pantalla
 //IMPORTANTE: EN los comandos de lectura lo que viene después del registro es la cantidad de bytes que queremos leer del mismo
 //TODO: Implementar una pantalla de créditos
+//TODO: Por algún motivo no puedo leer las temperaturas del MOS ni de la batería pero el ES_downG sí
+//TODO: Por algún motivo no puedo leer la corriente de la batería pero el ES_downg sí (0.57A en marcha en vacío)
 
 #include <odroid_go.h>
 #include "BLE.h"
@@ -28,6 +30,13 @@ typedef struct {
   uint16_t current_mileage;
   bool tail_light;
   bool locked;
+  int frame_temp;
+  int bat1_temp;
+  int bat2_temp;
+  int mos_temp;
+  int bat_current;
+  uint16_t power;
+  
 } ninebot_status_t;
 
 ble_connection_status_t ble_connection_status;

@@ -49,7 +49,23 @@ void msg_defs_init_reg() {
   reg_item[idx].key = REG_CURRENT_MILEAGE;
   strcpy (reg_item[idx++].name, "CURRENT MILEAGE");
 
+  reg_item[idx].key = REG_FRAME_TEMP;
+  strcpy (reg_item[idx++].name, "FRAME TEMP");
 
+  reg_item[idx].key = REG_BAT1_TEMP;
+  strcpy (reg_item[idx++].name, "BAT1 TEMP");
+
+  reg_item[idx].key = REG_BAT2_TEMP;
+  strcpy (reg_item[idx++].name, "BAT2 TEMP");
+
+  reg_item[idx].key = REG_MOS_TEMP;
+  strcpy (reg_item[idx++].name, "MOS TEMP");
+
+  reg_item[idx].key = REG_BAT_CURRENT;
+  strcpy (reg_item[idx++].name, "BAT CURRENT");
+
+  reg_item[idx].key = REG_POWER;
+  strcpy (reg_item[idx++].name, "POWER");
 }
 
 
@@ -78,7 +94,7 @@ void msg_defs_init_device_addr() {
 
   device_addr_item[idx].key = ADDR_ESC;
   strcpy (device_addr_item[idx++].name, "ESC");
-  
+
   device_addr_item[idx].key = ADDR_BLE;
   strcpy (device_addr_item[idx++].name, "BLE");
 

@@ -6,8 +6,8 @@ Ticker get_status;
 //echo "obase=16;ibase=16;xor((1 + 3E + 20 + 02 + FB + 2), FFFF)" | bc -l bin/logic.bc
 
 uint8_t payload_four_bytes[] = {READ_REG_PAYLOAD_4_BYTES};
-uint8_t payload_two_bytes[] = {READ_REG_PAYLOAD_2_BYTES};
-uint8_t payload_one_byte[] = {READ_REG_PAYLOAD_1_BYTE};
+uint8_t payload_two_bytes[] =  {READ_REG_PAYLOAD_2_BYTES};
+uint8_t payload_one_byte[] =   {READ_REG_PAYLOAD_1_BYTE};
 
 //Comando de GET PIN -> 5A A5 01 3E 20 01 17 06 82 FF me devuelve:
 //                      5A A5 01 20 3E 04 17 30 30 30 30 30 30 60 FE.
@@ -44,12 +44,29 @@ void ticker_get_status() {
       protocol_compose_send_msg(1, CMD_READ_REG, REG_CURRENT_MILEAGE, payload_two_bytes);
       break;
     case 6:
-      ui_update(protocol_process_cmd(0, (uint8_t *)"00000000")); //Al llamar a protocolo_process_cmd con un paquete vacío se obtiene la estructura sin más...
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_FRAME_TEMP, payload_two_bytes);
       break;
-    default:
+    case 7:
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_BAT1_TEMP, payload_two_bytes);
+      break;
+    case 8:
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_BAT2_TEMP, payload_two_bytes);
+      break;
+    case 9:
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_MOS_TEMP, payload_two_bytes);
+      break;
+    case 10:
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_BAT_CURRENT, payload_two_bytes);
+      break;
+    case 11:
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_POWER, payload_two_bytes);
+      break;
+    
+    case 12:
+      ui_update(protocol_process_cmd(0, (uint8_t *)"00000000")); //Al llamar a protocolo_process_cmd con un paquete vacío se obtiene la estructura sin más...
       break;
   }
   check_idx++;
-  if (check_idx>6) check_idx=0;
+  if (check_idx>12) check_idx=0;
 
 }
