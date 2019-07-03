@@ -79,7 +79,7 @@ void ui_update(ninebot_status_t nine_status) {
   GO.lcd.setTextColor(WHITE);
   GO.lcd.setCursor(80, LINE_WIDTH*4); //90 es mucho
   GO.lcd.print(nine_status.bat_level);
-  GO.lcd.print("(%)");
+  GO.lcd.print("%");
 
   /*
      MODO DE FUNCIONAMIENTO

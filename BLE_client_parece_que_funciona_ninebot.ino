@@ -14,7 +14,6 @@
 #include "BLE.h"
 #include "protocol.h"
 
-uint8_t payload_current_mileage[] = {READ_REG_PAYLOAD_2_BYTES};
 
 typedef struct {
   bool ble_connected;

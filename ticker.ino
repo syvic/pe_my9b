@@ -4,12 +4,17 @@ Ticker get_status;
 //Cálculo de checksums:
 //echo "obase=16;ibase=16;xor((1 + 3E + 20 + 02 + FB + 2), FFFF)" | bc -l bin/logic.bc
 
-uint8_t churro_lee_modo[] =                         {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x75, 0x01, 0x29, 0xFF};
-uint8_t churro_lee_batt[] =                         {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x22, 0x01, 0x7C, 0xFF}; //Puede ser el 22 o el B4
-uint8_t churro_lee_mileage[] =                      {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x29, 0x04, 0x72, 0xFF};
+//uint8_t churro_lee_modo[] =                         {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x75, 0x01, 0x29, 0xFF};
+//uint8_t churro_lee_batt[] =                         {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x22, 0x01, 0x7C, 0xFF}; //Puede ser el 22 o el B4
+//uint8_t churro_lee_mileage[] =                      {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x29, 0x04, 0x72, 0xFF};
 uint8_t churro_lee_remaining_mileage[] =            {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x25, 0x2, 0x78, 0xFF};
 uint8_t churro_lee_remaining_predicted_mileage[] =  {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x24, 0x2, 0x79, 0xFF};
 uint8_t churro_lee_current_mileage[] =              {0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x2F, 0x2, 0x6E, 0xFF};
+
+
+uint8_t payload_four_bytes[] = {READ_REG_PAYLOAD_4_BYTES};
+uint8_t payload_two_bytes[] = {READ_REG_PAYLOAD_2_BYTES};
+uint8_t payload_one_byte[] = {READ_REG_PAYLOAD_2_BYTES};
 
 
 
@@ -30,13 +35,16 @@ void ticker_get_status() {
 
   switch (check_idx) {
     case 0:
-      p_remote_characteristic_rx->writeValue(churro_lee_modo, sizeof churro_lee_modo, false);
+      //p_remote_characteristic_rx->writeValue(churro_lee_modo, sizeof churro_lee_modo, false);
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_OP_MODE, payload_one_byte);
       break;
     case 1:
-      p_remote_characteristic_rx->writeValue(churro_lee_batt, sizeof churro_lee_batt, false);
+      //p_remote_characteristic_rx->writeValue(churro_lee_batt, sizeof churro_lee_batt, false);
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_BAT_LVL, payload_one_byte);
       break;
     case 2:
-      p_remote_characteristic_rx->writeValue(churro_lee_mileage, sizeof churro_lee_mileage, false);
+      //p_remote_characteristic_rx->writeValue(churro_lee_mileage, sizeof churro_lee_mileage, false);
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_MILEAGE, payload_four_bytes);
       break;
     case 3:
       p_remote_characteristic_rx->writeValue(churro_lee_remaining_mileage, sizeof churro_lee_remaining_mileage, false);
@@ -45,8 +53,7 @@ void ticker_get_status() {
       p_remote_characteristic_rx->writeValue(churro_lee_remaining_predicted_mileage, sizeof churro_lee_remaining_predicted_mileage, false);
       break;
     case 5:
-      //p_remote_characteristic_rx->writeValue(churro_lee_current_mileage, sizeof churro_lee_current_mileage, false);
-      protocol_compose_send_msg(1, CMD_READ_REG, REG_CURRENT_MILEAGE, payload_current_mileage);
+      protocol_compose_send_msg(1, CMD_READ_REG, REG_CURRENT_MILEAGE, payload_two_bytes);
       break;
     case 6:
       ui_update(protocol_process_cmd(0, (uint8_t *)"00000000")); //Al llamar a protocolo_process_cmd con un paquete vacío se obtiene la estructura sin más...
