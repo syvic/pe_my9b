@@ -6,14 +6,13 @@
 //    - PETICIÓN: 5A A5 01 3E 20 01 10 0E 81 FF
 //    - RESPUEST: 5A A5 0E 20 3E 04 10 4E 32 47 54 51 38 39 38 43 34 37 39 31 21 FC
 //TODO: Recoger dato de velocidad para poder sacar velocidad máxima del trayecto y velocidad máxima total alcanzada
-//TODO: Que el cálculo del checksum se haga solo
 //TODO: QUe se reintente la conexión si no detecta BT y lo indique por pantalla
 //IMPORTANTE: EN los comandos de lectura lo que viene después del registro es la cantidad de bytes que queremos leer del mismo
+//TODO: Implementar una pantalla de créditos
 
 #include <odroid_go.h>
 #include "BLE.h"
 #include "protocol.h"
-
 
 typedef struct {
   bool ble_connected;
@@ -34,6 +33,12 @@ typedef struct {
 ble_connection_status_t ble_connection_status;
 
 void setup() {
+  Serial.begin(115200);
+  GO.begin();
+  
+  delay(200);
+  Serial.printf("INIT OK");
+  
   //Inicializamos hashes:
   msg_defs_init_device_addr();
   msg_defs_init_cmd();
@@ -41,9 +46,6 @@ void setup() {
   
   ui_init();
   
-  Serial.begin(115200);
-
-  GO.begin();
   ui_footer_msg("GO OK");
 
   BLEDevice::init("");

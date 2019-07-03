@@ -8,7 +8,7 @@ enum field_type {
 
 typedef struct {
   byte key;
-  char name[10];
+  char name[30];
 } hash_t;
 
 
@@ -65,7 +65,7 @@ void msg_defs_init_cmd() {
   strcpy (cmd_item[idx++].name, "WRITE REG");
 
   cmd_item[idx].key = CMD_RES1;
-  strcpy (cmd_item[idx++].name, "GET RES1?");
+  strcpy (cmd_item[idx++].name, "GOT QUERY RESPONSE");
 
   cmd_item[idx].key = CMD_RES2;
   strcpy (cmd_item[idx++].name, "GET RES2?");
@@ -78,7 +78,7 @@ void msg_defs_init_device_addr() {
 
   device_addr_item[idx].key = ADDR_ESC;
   strcpy (device_addr_item[idx++].name, "ESC");
-
+  
   device_addr_item[idx].key = ADDR_BLE;
   strcpy (device_addr_item[idx++].name, "BLE");
 

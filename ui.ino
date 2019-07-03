@@ -9,7 +9,7 @@ void ui_init() {
 
 
 void ui_footer_msg(char * msg) {
-  GO.lcd.fillRect(0, 225, 360, 25, YELLOW);
+  GO.lcd.fillRect(0, 225, 360, 25, BLACK);
   GO.lcd.setCursor(0, 230);
   GO.lcd.printf(msg);
 }
@@ -44,7 +44,7 @@ void ui_update(ninebot_status_t nine_status) {
 
 
   /*
-     AUTONOMÍA (OTRO CÁLCULO)
+     AUTONOMÍA (OTRO CÁLCULO). ESTE ES IGUAL QUE EL OTRO PERO CON UN FACTOR DEL 80%
   */
   GO.lcd.fillRect(0, LINE_WIDTH*1, COLUMN_SEPARATOR-1, LINE_WIDTH, BLACK);
   GO.lcd.setCursor(0, LINE_WIDTH*1);
@@ -53,7 +53,7 @@ void ui_update(ninebot_status_t nine_status) {
   GO.lcd.print("RNG2: ");
   GO.lcd.setCursor(80, LINE_WIDTH*1); 
   GO.lcd.setTextColor(WHITE);
-  GO.lcd.print((nine_status.remaining_predicted_mileage * 1.25) / 100.0);
+  GO.lcd.print((nine_status.remaining_predicted_mileage) / 100.0);
 
   /*
      CURRENT MILEAGE

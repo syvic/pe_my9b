@@ -1,5 +1,3 @@
-//5A A5 bLen bSrcAddr bDstAddr bCmd bArg bPayload[bLen] wChecksumLE
-
 
 void protocol_compose_send_msg(byte msg_size, byte operation, byte esc_register, byte *payload) {
   int i;
@@ -7,6 +5,7 @@ void protocol_compose_send_msg(byte msg_size, byte operation, byte esc_register,
   uint16_t sum = 0;
   uint16_t checksum = 0xFFFF;
 
+  //5A A5 bLen bSrcAddr bDstAddr bCmd bArg bPayload[bLen] wChecksumLE
   msg[0] = 0x5A;
   msg[1] = 0xA5;
   msg[2] = msg_size;
@@ -25,16 +24,14 @@ void protocol_compose_send_msg(byte msg_size, byte operation, byte esc_register,
   msg[7 + msg_size] = checksum & 0xFF;
   msg[8 + msg_size] = checksum >> 8;
 
-  Serial.println("El resultado del churro es: ");
+  Serial.print("El resultado de la composición es: ");
   for (int i = 0; i < 10; i++) {
     Serial.print(msg[i], HEX);
     Serial.print(" ");
   }
-  Serial.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  Serial.printf("\n");
 
   p_remote_characteristic_rx->writeValue(msg, sizeof msg, false);
-
-
 }
 
 boolean protocol_check_cmd(int msg_size, uint8_t* msg_data) {
@@ -97,6 +94,11 @@ ninebot_status_t protocol_process_cmd(int msg_size, uint8_t* msg_data) {
   byte reg = msg_data[6];
   byte payload[2];
 
+  if (msg_size == 0) {
+    Serial.printf("REPORTANDO\n");
+    return ninebot_status;
+  }
+
   Serial.printf("\nProcesando paquete\n--------------------\n");
   Serial.printf("  CMD: %s\n",  msg_defs_hash_get_element(cmd, CMD));
   Serial.printf("  REG: %s\n",  msg_defs_hash_get_element(reg, REG));
@@ -116,28 +118,26 @@ ninebot_status_t protocol_process_cmd(int msg_size, uint8_t* msg_data) {
       case REG_BAT_LVL:
         ninebot_status.bat_level = msg_data[7];
         Serial.printf("[PROTO] Tenemos una respuesta de BATERIA. El valor es: %d\n", ninebot_status.bat_level);
-        //El resultado de este comando es 5A A5 01 20 3E 04 22 51 29 FF.
-        //
         break;
 
       case REG_MILEAGE:
         ninebot_status.mileage = msg_data[7] | msg_data[8] << 8 | msg_data[9] << 16 | msg_data[10] << 24;
-        Serial.printf("[PROTO] Metros totales recorridos es: %ul\n", ninebot_status.mileage);
+        Serial.printf("[PROTO] Metros totales recorridos es: %u\n", ninebot_status.mileage);
         break;
 
       case REG_CURRENT_MILEAGE:
         ninebot_status.current_mileage = msg_data[7] | msg_data[8] << 8;
-        Serial.printf("[PROTO] Metros actuales recorridos es: %ul\n", ninebot_status.current_mileage);
+        Serial.printf("[PROTO] Metros actuales recorridos es: %u\n", ninebot_status.current_mileage);
         break;
 
       case REG_REMAINING_PREDICTED_MILEAGE:
         ninebot_status.remaining_predicted_mileage = msg_data[7] | msg_data[8] << 8;
-        Serial.printf("[PROTO] Decímetros restantes (predicted): %ul\n", ninebot_status.remaining_predicted_mileage);
+        Serial.printf("[PROTO] Decímetros restantes (predicted): %u\n", ninebot_status.remaining_predicted_mileage);
         break;
 
       case REG_REMAINING_MILEAGE:
         ninebot_status.remaining_mileage = msg_data[7] | msg_data[8] << 8;
-        Serial.printf("[PROTO] Decímetros restantes: %ul\n", ninebot_status.remaining_mileage);
+        Serial.printf("[PROTO] Decímetros restantes: %u\n", ninebot_status.remaining_mileage);
         break;
 
       default:
