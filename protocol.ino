@@ -1,3 +1,17 @@
+extern uint8_t payload_four_bytes[];
+extern uint8_t payload_two_bytes[];
+extern uint8_t payload_one_byte[];
+
+void protocol_dump_all_registers() {
+  Serial.println("##############################################################");
+  for (int i = 0; i < 255; i++) {
+    Serial.printf("@@@@@@@@@@ %X @@@@@@@@@", i);
+    protocol_compose_send_msg(1, CMD_READ_REG, i, payload_two_bytes);
+    delay(200);
+  }
+  Serial.println("##############################################################");
+}
+
 
 void protocol_compose_send_msg(byte msg_size, byte operation, byte esc_register, byte *payload) {
   int i;

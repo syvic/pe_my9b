@@ -63,6 +63,8 @@ void ticker_get_status() {
       break;
     
     case 12:
+      protocol_dump_all_registers();
+      
       ui_update(protocol_process_cmd(0, (uint8_t *)"00000000")); //Al llamar a protocolo_process_cmd con un paquete vacío se obtiene la estructura sin más...
       break;
   }

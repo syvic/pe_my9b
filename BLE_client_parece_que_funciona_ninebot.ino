@@ -11,6 +11,8 @@
 //TODO: Implementar una pantalla de créditos
 //TODO: Por algún motivo no puedo leer las temperaturas del MOS ni de la batería pero el ES_downG sí
 //TODO: Por algún motivo no puedo leer la corriente de la batería pero el ES_downg sí (0.57A en marcha en vacío)
+//TODO: Hacer que al arranque te presente la lista de patines disponibles y que deje seleccionar uno
+
 
 #include <odroid_go.h>
 #include "BLE.h"
@@ -46,7 +48,7 @@ void setup() {
   GO.begin();
   
   delay(200);
-  Serial.printf("INIT OK");
+  Serial.printf("INIT OK\n");
   
   //Inicializamos hashes:
   msg_defs_init_device_addr();
