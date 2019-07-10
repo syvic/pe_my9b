@@ -38,7 +38,7 @@ void ticker_get_status() {
       protocol_compose_send_msg(1, CMD_READ_REG, REG_REMAINING_MILEAGE, payload_two_bytes);
       break;
     case 4:
-      protocol_compose_send_msg(1, CMD_READ_REG, REG_REMAINING_PREDICTED_MILEAGE, payload_two_bytes);
+      //protocol_compose_send_msg(1, CMD_READ_REG, REG_REMAINING_PREDICTED_MILEAGE, payload_two_bytes);
       break;
     case 5:
       protocol_compose_send_msg(1, CMD_READ_REG, REG_CURRENT_MILEAGE, payload_two_bytes);
@@ -63,7 +63,7 @@ void ticker_get_status() {
       break;
     
     case 12:
-      protocol_dump_all_registers();
+      //protocol_dump_all_registers();
       
       ui_update(protocol_process_cmd(0, (uint8_t *)"00000000")); //Al llamar a protocolo_process_cmd con un paquete vacío se obtiene la estructura sin más...
       break;

@@ -44,7 +44,7 @@ void ui_update(ninebot_status_t nine_status) {
 
 
   /*
-     AUTONOMÍA (OTRO CÁLCULO). ESTE ES IGUAL QUE EL OTRO PERO CON UN FACTOR DEL 80%
+     AUTONOMÍA (OTRO CÁLCULO). ESTE ES IGUAL QUE EL OTRO PERO CON UN FACTOR DEL 80% (Corregido al 40%)
   */
   GO.lcd.fillRect(0, LINE_WIDTH * 1, COLUMN_SEPARATOR - 1, LINE_WIDTH, BLACK);
   GO.lcd.setCursor(0, LINE_WIDTH * 1);
@@ -53,7 +53,7 @@ void ui_update(ninebot_status_t nine_status) {
   GO.lcd.print("RNG2: ");
   GO.lcd.setCursor(80, LINE_WIDTH * 1);
   GO.lcd.setTextColor(WHITE);
-  GO.lcd.print((nine_status.remaining_predicted_mileage) / 100.0);
+  GO.lcd.print(nine_status.remaining_mileage / 250.0); //Convertimos a metros y aplicamos el factor real de conversión del 40% obtenidos empíricamente con una carga promedio de 90Kg. (100Kg 50% del tiempo y 80Kg 50% del tiempo)
 
   /*
      CURRENT MILEAGE
